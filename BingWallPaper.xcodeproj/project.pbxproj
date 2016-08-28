@@ -1,0 +1,385 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		BF41660C1D69E18C00697A92 /* WallPaperDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF41660B1D69E18C00697A92 /* WallPaperDownloader.swift */; };
+		BF61C0221D721119007FFDAF /* WallPaperAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF61C0211D721119007FFDAF /* WallPaperAPIManager.swift */; };
+		BF61C0251D721243007FFDAF /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF61C0231D721243007FFDAF /* MainMenu.xib */; };
+		BF61C0291D721473007FFDAF /* WallPaperModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF61C0281D721473007FFDAF /* WallPaperModel.swift */; };
+		BF61C02B1D72B8CA007FFDAF /* WallPaperSevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF61C02A1D72B8CA007FFDAF /* WallPaperSevice.swift */; };
+		BF61C02D1D72E513007FFDAF /* UserNotificationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF61C02C1D72E513007FFDAF /* UserNotificationHelper.swift */; };
+		BFEFB9B71D57351400990311 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFEFB9B61D57351400990311 /* AppDelegate.swift */; };
+		BFEFB9B91D57351400990311 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BFEFB9B81D57351400990311 /* Assets.xcassets */; };
+		BFEFB9C71D5737ED00990311 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFEFB9C41D5737ED00990311 /* SwiftyJSON.framework */; };
+		BFEFB9C81D5737ED00990311 /* SwiftyJSON.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BFEFB9C41D5737ED00990311 /* SwiftyJSON.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		BFEFB9CE1D57382D00990311 /* SwiftyJSON.framework.dSYM in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFEFB9CC1D57382D00990311 /* SwiftyJSON.framework.dSYM */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		BFEFB9C91D5737ED00990311 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				BFEFB9C81D5737ED00990311 /* SwiftyJSON.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BFEFB9CA1D57380C00990311 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 16;
+			files = (
+				BFEFB9CE1D57382D00990311 /* SwiftyJSON.framework.dSYM in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		BF41660B1D69E18C00697A92 /* WallPaperDownloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WallPaperDownloader.swift; sourceTree = "<group>"; };
+		BF61C0211D721119007FFDAF /* WallPaperAPIManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WallPaperAPIManager.swift; sourceTree = "<group>"; };
+		BF61C0241D721243007FFDAF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		BF61C0281D721473007FFDAF /* WallPaperModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WallPaperModel.swift; sourceTree = "<group>"; };
+		BF61C02A1D72B8CA007FFDAF /* WallPaperSevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WallPaperSevice.swift; sourceTree = "<group>"; };
+		BF61C02C1D72E513007FFDAF /* UserNotificationHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserNotificationHelper.swift; sourceTree = "<group>"; };
+		BFEFB9B31D57351400990311 /* BingWallPaper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BingWallPaper.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BFEFB9B61D57351400990311 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		BFEFB9B81D57351400990311 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		BFEFB9BD1D57351400990311 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BFEFB9C41D5737ED00990311 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/Mac/SwiftyJSON.framework; sourceTree = "<group>"; };
+		BFEFB9CC1D57382D00990311 /* SwiftyJSON.framework.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = SwiftyJSON.framework.dSYM; path = Carthage/Build/Mac/SwiftyJSON.framework.dSYM; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		BFEFB9B01D57351400990311 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BFEFB9C71D5737ED00990311 /* SwiftyJSON.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		BF4166011D69DC1B00697A92 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				BF61C02C1D72E513007FFDAF /* UserNotificationHelper.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		BF4166041D69DC5200697A92 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				BF41660B1D69E18C00697A92 /* WallPaperDownloader.swift */,
+				BF61C0211D721119007FFDAF /* WallPaperAPIManager.swift */,
+				BF61C02A1D72B8CA007FFDAF /* WallPaperSevice.swift */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		BF61C0261D72124B007FFDAF /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				BF61C0231D721243007FFDAF /* MainMenu.xib */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		BF61C0271D721473007FFDAF /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				BF61C0281D721473007FFDAF /* WallPaperModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		BFEFB9AA1D57351400990311 = {
+			isa = PBXGroup;
+			children = (
+				BFEFB9CF1D57720E00990311 /* Frameworks */,
+				BFEFB9B41D57351400990311 /* Products */,
+				BFEFB9B51D57351400990311 /* TTGBingWallPaper */,
+			);
+			sourceTree = "<group>";
+		};
+		BFEFB9B41D57351400990311 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BFEFB9B31D57351400990311 /* BingWallPaper.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		BFEFB9B51D57351400990311 /* TTGBingWallPaper */ = {
+			isa = PBXGroup;
+			children = (
+				BF61C0271D721473007FFDAF /* Model */,
+				BF61C0261D72124B007FFDAF /* UI */,
+				BF4166041D69DC5200697A92 /* Core */,
+				BF4166011D69DC1B00697A92 /* Common */,
+				BFEFB9B61D57351400990311 /* AppDelegate.swift */,
+				BFEFB9B81D57351400990311 /* Assets.xcassets */,
+				BFEFB9BD1D57351400990311 /* Info.plist */,
+			);
+			path = TTGBingWallPaper;
+			sourceTree = "<group>";
+		};
+		BFEFB9CF1D57720E00990311 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				BFEFB9CC1D57382D00990311 /* SwiftyJSON.framework.dSYM */,
+				BFEFB9C41D5737ED00990311 /* SwiftyJSON.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		BFEFB9B21D57351400990311 /* BingWallPaper */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BFEFB9C01D57351400990311 /* Build configuration list for PBXNativeTarget "BingWallPaper" */;
+			buildPhases = (
+				BFEFB9AF1D57351400990311 /* Sources */,
+				BFEFB9B01D57351400990311 /* Frameworks */,
+				BFEFB9B11D57351400990311 /* Resources */,
+				BFEFB9C91D5737ED00990311 /* Embed Frameworks */,
+				BFEFB9CA1D57380C00990311 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = BingWallPaper;
+			productName = TTGBingWallPaper;
+			productReference = BFEFB9B31D57351400990311 /* BingWallPaper.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		BFEFB9AB1D57351400990311 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = TTG;
+				LastSwiftUpdateCheck = 0730;
+				LastUpgradeCheck = 0730;
+				ORGANIZATIONNAME = tutuge;
+				TargetAttributes = {
+					BFEFB9B21D57351400990311 = {
+						CreatedOnToolsVersion = 7.3.1;
+					};
+				};
+			};
+			buildConfigurationList = BFEFB9AE1D57351400990311 /* Build configuration list for PBXProject "BingWallPaper" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = BFEFB9AA1D57351400990311;
+			productRefGroup = BFEFB9B41D57351400990311 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				BFEFB9B21D57351400990311 /* BingWallPaper */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		BFEFB9B11D57351400990311 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BFEFB9B91D57351400990311 /* Assets.xcassets in Resources */,
+				BF61C0251D721243007FFDAF /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		BFEFB9AF1D57351400990311 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BFEFB9B71D57351400990311 /* AppDelegate.swift in Sources */,
+				BF61C0291D721473007FFDAF /* WallPaperModel.swift in Sources */,
+				BF61C02B1D72B8CA007FFDAF /* WallPaperSevice.swift in Sources */,
+				BF61C02D1D72E513007FFDAF /* UserNotificationHelper.swift in Sources */,
+				BF61C0221D721119007FFDAF /* WallPaperAPIManager.swift in Sources */,
+				BF41660C1D69E18C00697A92 /* WallPaperDownloader.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		BF61C0231D721243007FFDAF /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				BF61C0241D721243007FFDAF /* Base */,
+			);
+			name = MainMenu.xib;
+			path = ..;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		BFEFB9BE1D57351400990311 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		BFEFB9BF1D57351400990311 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		BFEFB9C11D57351400990311 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+				);
+				INFOPLIST_FILE = TTGBingWallPaper/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				PRODUCT_BUNDLE_IDENTIFIER = me.tutuge.TTGBingWallPaper;
+				PRODUCT_NAME = BingWallPaper;
+			};
+			name = Debug;
+		};
+		BFEFB9C21D57351400990311 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+				);
+				INFOPLIST_FILE = TTGBingWallPaper/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				PRODUCT_BUNDLE_IDENTIFIER = me.tutuge.TTGBingWallPaper;
+				PRODUCT_NAME = BingWallPaper;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		BFEFB9AE1D57351400990311 /* Build configuration list for PBXProject "BingWallPaper" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BFEFB9BE1D57351400990311 /* Debug */,
+				BFEFB9BF1D57351400990311 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BFEFB9C01D57351400990311 /* Build configuration list for PBXNativeTarget "BingWallPaper" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BFEFB9C11D57351400990311 /* Debug */,
+				BFEFB9C21D57351400990311 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = BFEFB9AB1D57351400990311 /* Project object */;
+}
