@@ -10,6 +10,10 @@ Mac menubar app. Automate download daily picture from Microsoft Bing website and
 * Automate download daily picture from Microsoft Bing.
 * Open source. Written in Swift 2.2.
 
+## Install
+
+Download the `BingWallPaper.app.zip` from the latest release.  Unzip it and drap the `BingWallPaper.app` file into your `Applications` folder.
+
 ## Build
 
 Written in Swift 2.2. Xcode 7.3 and [Carthage](https://github.com/Carthage/Carthage) required.
