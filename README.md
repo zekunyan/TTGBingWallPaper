@@ -1,6 +1,8 @@
 ![banner](https://github.com/zekunyan/TTGBingWallPaper/raw/master/Resources/banner.png)
 
-Mac menubar app. Automate download daily picture from Microsoft Bing website and set it as your wallpaper. Written in Swift. [如果你在天朝=。=](http://tutuge.me/2016/08/28/TTGBingWallPaper/)
+Mac menubar app. Automate download daily picture from Microsoft Bing website and set it as your wallpaper. Written in Swift.
+
+[如果你在天朝，点这个链接](http://tutuge.me/2016/08/28/TTGBingWallPaper/)
 
 ![screenshot](https://github.com/zekunyan/TTGBingWallPaper/raw/master/Resources/screenshot_2.png)
 
