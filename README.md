@@ -12,10 +12,20 @@ Mac menubar app. Automate download daily picture from Microsoft Bing website and
 
 ## Build
 
-Written in Swift 2.2. Xcode 7.3 required.
+Written in Swift 2.2. Xcode 7.3 and [Carthage](https://github.com/Carthage/Carthage) required.
 
 ## Development
 
 * git clone this repo.
 * run `carthage update`.
 * Open the `BingWallPaper.xcodeproj` and build.
+
+## Library
+
+* [SwiftyJSON/SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON)
+
+## TODO
+
+* History wallpapers gallery.
+* Support different country Bing Wallpaper.
+* More information about the wallpaper.
