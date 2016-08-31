@@ -154,7 +154,9 @@ class WallPaperSevice {
 
     private func setWallPaperWithImagePath(imageLocationUrl: NSURL) -> Bool {
         do {
-            try NSWorkspace.sharedWorkspace().setDesktopImageURL(imageLocationUrl, forScreen: NSScreen.mainScreen()!, options: NSWorkspace.sharedWorkspace().desktopImageOptionsForScreen(NSScreen.mainScreen()!)!)
+			for screen in NSScreen.screens()! {
+				try NSWorkspace.sharedWorkspace().setDesktopImageURL(imageLocationUrl, forScreen: screen, options: NSWorkspace.sharedWorkspace().desktopImageOptionsForScreen(NSScreen.mainScreen()!)!)
+			}
         } catch let error {
             print("Set wall paper error: \(error)")
             return false
