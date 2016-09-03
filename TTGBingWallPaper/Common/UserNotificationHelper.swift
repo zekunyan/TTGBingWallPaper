@@ -23,7 +23,7 @@ class UserNotificationHelper {
         notification.subtitle = subTitle
         notification.informativeText = content
         
-        notification.deliveryDate = NSDate.init(timeIntervalSinceNow: 0.5)
+        notification.deliveryDate = NSDate(timeIntervalSinceNow: 0.5)
         
         NSUserNotificationCenter.defaultUserNotificationCenter().scheduleNotification(notification)
     }

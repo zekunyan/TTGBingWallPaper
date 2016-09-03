@@ -13,9 +13,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     let statusItem = NSStatusBar.systemStatusBar().statusItemWithLength(NSSquareStatusItemLength)
     
+    var autoUpdateMenuItem: NSMenuItem?
+    
     @IBOutlet weak var window: NSWindow!
     
     func applicationDidFinishLaunching(aNotification: NSNotification) {
+        // Setup UI
         configStatusButton()
         configMenuItems()
         
@@ -28,6 +31,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // Set Wake from sleep notification
         NSWorkspace.sharedWorkspace().notificationCenter.addObserver(self, selector:
             #selector(didWakeFromSleep), name: NSWorkspaceDidWakeNotification, object: nil)
+        
+        // Check if need update
+        WallPaperSevice.sharedInstance.checkIfNeedUpdateWallPaper()
     }
     
     // MARK: Config
@@ -40,6 +46,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     func configMenuItems() {
         let menu = NSMenu()
+        
+        // Auto update 
+        autoUpdateMenuItem = NSMenuItem(title: "Auto Update", action: #selector(menuItemAutoUpdateClick), keyEquivalent: "")
+        autoUpdateMenuItem?.onStateImage = NSImage(named: "checked")
+        autoUpdateMenuItem?.offStateImage = nil
+        updateAutoUpdateMenuItemState()
+        
+        menu.addItem(autoUpdateMenuItem!)
         
         // Refresh newest wall paper
         menu.addItem(NSMenuItem(title: "Newest", action: #selector(menuItemNewestWallPaperClick), keyEquivalent: "n"))
@@ -63,6 +77,17 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     // MARK: Actions
+    
+    func menuItemAutoUpdateClick() {
+        let state = WallPaperSevice.sharedInstance.currentAutoUpadteSwitchState
+        
+        UserNotificationHelper.show("Config change!", subTitle:  "Auto update: \(!state ? "ON" : "OFF")", content: "")
+        
+        WallPaperSevice.sharedInstance.currentAutoUpadteSwitchState = !state
+        WallPaperSevice.sharedInstance.checkIfNeedUpdateWallPaper()
+        
+        updateAutoUpdateMenuItemState()
+    }
     
     func menuItemNewestWallPaperClick() {
         WallPaperSevice.sharedInstance.updateAndSetNewestBingWallPaper { (success) in
@@ -90,7 +115,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     func menuItemAboutClick() {
         let alert = NSAlert()
-        alert.icon = NSImage.init(named: "AppIcon")
+        alert.icon = NSImage(named: "AppIcon")
         alert.messageText = "Bing Wallpaper"
         alert.informativeText = "By tutuge.\nEmail: zekunyan@163.com\nGithub: https://github.com/zekunyan"
         alert.alertStyle = .InformationalAlertStyle
@@ -105,6 +130,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     @objc private func didWakeFromSleep() {
         WallPaperSevice.sharedInstance.checkIfNeedUpdateWallPaper()
+    }
+    
+    // MARK: Private methods
+    
+    private func updateAutoUpdateMenuItemState() {
+        autoUpdateMenuItem?.state = Int(WallPaperSevice.sharedInstance.currentAutoUpadteSwitchState)
     }
 }
 

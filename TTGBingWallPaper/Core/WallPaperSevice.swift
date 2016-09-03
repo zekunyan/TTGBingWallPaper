@@ -15,7 +15,8 @@ class WallPaperSevice {
     private static let ImagesFolderName = "BingWallPapers"
 
     private static let CurrentImageLocationUserDefaultKey = "CurrentImageLocationUserDefaultKey"
-    private static let LastUpdateWallPaperTimeStamp = "LastUpdateWallPaperTimeStamp"
+    private static let LastUpdateWallPaperTimeStampUserDefaultKey = "LastUpdateWallPaperTimeStampUserDefaultKey"
+    private static let AutoUpdateSwitchUserDefaultKey = "AutoUpdateSwitchUserDefaultKey"
     
     private static let WallPaperUpdateDurationSeconds: NSTimeInterval = 12 * 3600;
 
@@ -38,23 +39,37 @@ class WallPaperSevice {
             currentModel?.saveToLocal()
         }
     }
-
-    // Last update time
-    var lastUpdateTime: NSTimeInterval {
+    
+    // Current auto update switch state
+    var currentAutoUpadteSwitchState: Bool {
         set {
-            NSUserDefaults.standardUserDefaults().setDouble(newValue, forKey: WallPaperSevice.LastUpdateWallPaperTimeStamp)
+            NSUserDefaults.standardUserDefaults().setBool(newValue, forKey: WallPaperSevice.AutoUpdateSwitchUserDefaultKey)
         }
         get {
-            return NSUserDefaults.standardUserDefaults().doubleForKey(WallPaperSevice.LastUpdateWallPaperTimeStamp)
+            return NSUserDefaults.standardUserDefaults().boolForKey(WallPaperSevice.AutoUpdateSwitchUserDefaultKey)
+        }
+    }
+
+    // Last update time
+    private var lastUpdateTime: NSTimeInterval {
+        set {
+            NSUserDefaults.standardUserDefaults().setDouble(newValue, forKey: WallPaperSevice.LastUpdateWallPaperTimeStampUserDefaultKey)
+        }
+        get {
+            return NSUserDefaults.standardUserDefaults().doubleForKey(WallPaperSevice.LastUpdateWallPaperTimeStampUserDefaultKey)
         }
     }
     
     // Update timer
-    var updateTimer: NSTimer?
+    private var updateTimer: NSTimer?
     
     // MARK: Public methods
 
     func setup() {
+        // If first time launch
+        if lastUpdateTime == 0 {
+            currentAutoUpadteSwitchState = true
+        }
 
         // Create folder
         let applicationSupportedFolderUrl = NSFileManager.defaultManager().URLsForDirectory(.ApplicationSupportDirectory, inDomains: NSSearchPathDomainMask.UserDomainMask).first
@@ -63,13 +78,14 @@ class WallPaperSevice {
 
         guard let _ = imagesFolderLocation else {
             print("Create images folder url error.")
-            return
+            exit(0)
         }
 
         do {
             try NSFileManager.defaultManager().createDirectoryAtURL(imagesFolderLocation!, withIntermediateDirectories: true, attributes: nil)
         } catch let error {
             print("Create images folder error: \(error)")
+            exit(0)
         }
 
         // Get local WallPaper Model
@@ -79,9 +95,6 @@ class WallPaperSevice {
         if let location = NSUserDefaults.standardUserDefaults().objectForKey(WallPaperSevice.CurrentImageLocationUserDefaultKey) as? String {
             currentImageLocation = NSURL(string: location)
         }
-
-        // Check if need update
-        self.checkIfNeedUpdateWallPaper()
     }
     
     /**
@@ -91,7 +104,12 @@ class WallPaperSevice {
         // Cancel the timer first
         updateTimer?.invalidate()
         
-        let currentTime = NSDate.init().timeIntervalSince1970
+        if currentAutoUpadteSwitchState == false {
+            // No auto update
+            return
+        }
+        
+        let currentTime = NSDate().timeIntervalSince1970
         var nextUpdateDuration: NSTimeInterval = 0
         
         if currentTime - lastUpdateTime < WallPaperSevice.WallPaperUpdateDurationSeconds {
