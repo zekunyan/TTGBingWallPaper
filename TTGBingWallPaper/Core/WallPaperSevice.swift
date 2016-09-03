@@ -13,7 +13,11 @@ class WallPaperSevice {
     // Constant
     private static let MainFolderName = "TTGBingWallPaper"
     private static let ImagesFolderName = "BingWallPapers"
+
     private static let CurrentImageLocationUserDefaultKey = "CurrentImageLocationUserDefaultKey"
+    private static let LastUpdateWallPaperTimeStamp = "LastUpdateWallPaperTimeStamp"
+    
+    private static let WallPaperUpdateDurationSeconds: NSTimeInterval = 12 * 3600;
 
     // Singleton
     static let sharedInstance = WallPaperSevice()
@@ -35,6 +39,19 @@ class WallPaperSevice {
         }
     }
 
+    // Last update time
+    var lastUpdateTime: NSTimeInterval {
+        set {
+            NSUserDefaults.standardUserDefaults().setDouble(newValue, forKey: WallPaperSevice.LastUpdateWallPaperTimeStamp)
+        }
+        get {
+            return NSUserDefaults.standardUserDefaults().doubleForKey(WallPaperSevice.LastUpdateWallPaperTimeStamp)
+        }
+    }
+    
+    // Update timer
+    var updateTimer: NSTimer?
+    
     // MARK: Public methods
 
     func setup() {
@@ -63,13 +80,41 @@ class WallPaperSevice {
             currentImageLocation = NSURL(string: location)
         }
 
-        // Log
-        print("WallPaperSevice Setup: \(currentModel), \n\(currentImageLocation)")
-
-        // Start Timer
-        NSTimer.scheduledTimerWithTimeInterval(24 * 3600, target: self, selector: #selector(refreshTimerDidCall), userInfo: nil, repeats: true)
+        // Check if need update
+        self.checkIfNeedUpdateWallPaper()
+    }
+    
+    /**
+     Check if need to update wallpaper
+     */
+    @objc func checkIfNeedUpdateWallPaper() {
+        // Cancel the timer first
+        updateTimer?.invalidate()
+        
+        let currentTime = NSDate.init().timeIntervalSince1970
+        var nextUpdateDuration: NSTimeInterval = 0
+        
+        if currentTime - lastUpdateTime < WallPaperSevice.WallPaperUpdateDurationSeconds {
+            // Not yet, continue the timer
+            nextUpdateDuration = WallPaperSevice.WallPaperUpdateDurationSeconds - (currentTime - lastUpdateTime)
+        } else {
+            // Is time to update
+            self.updateAndSetNewestBingWallPaper({ (success) in
+                UserNotificationHelper.showWallPaperUpdateInfoWithModel()
+            })
+            lastUpdateTime = currentTime
+            nextUpdateDuration = WallPaperSevice.WallPaperUpdateDurationSeconds
+        }
+        
+        // Create timer
+        updateTimer = NSTimer.scheduledTimerWithTimeInterval(nextUpdateDuration, target: self, selector: #selector(checkIfNeedUpdateWallPaper), userInfo: nil, repeats: false)
     }
 
+    /**
+     Update and save newest wallpaper
+     
+     - parameter complete: complete callback
+     */
     func updateAndSetNewestBingWallPaper(complete: ((success:Bool) -> Void)) {
         WallPaperAPIManager.getNewestBingWallPaper {
             (model) in
@@ -77,6 +122,11 @@ class WallPaperSevice {
         }
     }
 
+    /**
+     Update and save random wallpaper
+     
+     - parameter complete: complete callback
+     */
     func updateAndSetRandomBingWallPaper(complete: ((success:Bool) -> Void)) {
         WallPaperAPIManager.getRandomBingWallPaper {
             (model) in
@@ -85,7 +135,13 @@ class WallPaperSevice {
     }
 
     // MARK: Private methods
-
+    
+    /**
+     Update local model and set new wallpaper
+     
+     - parameter model:    new wallpaper model
+     - parameter complete: complete callback
+     */
     private func updateWallPaperFromModel(model: WallPaper?, complete: ((success:Bool) -> Void)) {
         // Check model
         guard let _ = model else {
@@ -163,12 +219,5 @@ class WallPaperSevice {
         }
 
         return true
-    }
-
-    /**
-     Auto refresh timer callback
-     */
-    @objc private func refreshTimerDidCall() {
-
     }
 }

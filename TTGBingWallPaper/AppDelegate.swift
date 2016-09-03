@@ -24,6 +24,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         // Update
         WallPaperSevice.sharedInstance.updateAndSetNewestBingWallPaper { (success) in}
+        
+        // Set Wake from sleep notification
+        NSWorkspace.sharedWorkspace().notificationCenter.addObserver(self, selector:
+            #selector(didWakeFromSleep), name: NSWorkspaceDidWakeNotification, object: nil)
     }
     
     // MARK: Config
@@ -62,13 +66,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     func menuItemNewestWallPaperClick() {
         WallPaperSevice.sharedInstance.updateAndSetNewestBingWallPaper { (success) in
-            UserNotificationHelper.show("Update !", subTitle: WallPaperSevice.sharedInstance.currentModel?.copyRight, content: "")
+            UserNotificationHelper.showWallPaperUpdateInfoWithModel()
         }
     }
 
     func menuItemRandomWallPaperClick() {
         WallPaperSevice.sharedInstance.updateAndSetRandomBingWallPaper { (success) in
-            UserNotificationHelper.show("Update !", subTitle: WallPaperSevice.sharedInstance.currentModel?.copyRight, content: "")
+            UserNotificationHelper.showWallPaperUpdateInfoWithModel()
         }
     }
     
@@ -95,6 +99,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     func menuItemQuitClick() {
         NSApplication.sharedApplication().terminate(nil)
+    }
+    
+    // MARK: NSWorkspaceDidWakeNotification
+    
+    @objc private func didWakeFromSleep() {
+        WallPaperSevice.sharedInstance.checkIfNeedUpdateWallPaper()
     }
 }
 

@@ -9,6 +9,12 @@
 import Foundation
 
 class UserNotificationHelper {
+    static func showWallPaperUpdateInfoWithModel() {
+        UserNotificationHelper.show("Update !",
+                                    subTitle: WallPaperSevice.sharedInstance.currentModel?.copyRight,
+                                    content: "")
+    }
+    
     static func show(title:String?, subTitle:String?, content:String?) {
         NSUserNotificationCenter.defaultUserNotificationCenter().removeAllDeliveredNotifications();
         
