@@ -23,7 +23,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         WallPaperSevice.sharedInstance.setup()
         
         // Update
-        WallPaperSevice.sharedInstance.updateAndSetNewestBingWallPaper()
+        WallPaperSevice.sharedInstance.updateAndSetNewestBingWallPaper { (success) in}
     }
     
     // MARK: Config
@@ -37,8 +37,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func configMenuItems() {
         let menu = NSMenu()
         
-        // Refresh wall paper
-        menu.addItem(NSMenuItem(title: "Refresh", action: #selector(menuItemRefreshWallPaperClick), keyEquivalent: "r"))
+        // Refresh newest wall paper
+        menu.addItem(NSMenuItem(title: "Newest", action: #selector(menuItemNewestWallPaperClick), keyEquivalent: "n"))
+        
+        // Refresh random wall paper
+        menu.addItem(NSMenuItem(title: "Random", action: #selector(menuItemRandomWallPaperClick), keyEquivalent: "r"))
         
         // Copyright
         menu.addItem(NSMenuItem(title: "Copyright", action: #selector(menuItemCopyrightClick), keyEquivalent: ""))
@@ -57,8 +60,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     // MARK: Actions
     
-    func menuItemRefreshWallPaperClick() {
-        WallPaperSevice.sharedInstance.updateAndSetNewestBingWallPaper()
+    func menuItemNewestWallPaperClick() {
+        WallPaperSevice.sharedInstance.updateAndSetNewestBingWallPaper { (success) in
+            UserNotificationHelper.show("Update !", subTitle: WallPaperSevice.sharedInstance.currentModel?.copyRight, content: "")
+        }
+    }
+
+    func menuItemRandomWallPaperClick() {
+        WallPaperSevice.sharedInstance.updateAndSetRandomBingWallPaper { (success) in
+            UserNotificationHelper.show("Update !", subTitle: WallPaperSevice.sharedInstance.currentModel?.copyRight, content: "")
+        }
     }
     
     func menuItemCopyrightClick() {
