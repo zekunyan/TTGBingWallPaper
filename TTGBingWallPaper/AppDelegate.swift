@@ -132,10 +132,24 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     func menuItemAboutClick() {
+        let contentTextView = NSTextView()
+        
+        contentTextView.frame = CGRectMake(0, 0, 300, 60)
+        contentTextView.string = "By tutuge.\nEmail: zekunyan@163.com\nGithub: https://github.com/zekunyan"
+        contentTextView.sizeToFit()
+        
+        contentTextView.drawsBackground = false
+        contentTextView.font = NSFont.systemFontOfSize(14)
+        
+        contentTextView.editable = true
+        contentTextView.enabledTextCheckingTypes = NSTextCheckingAllTypes
+        contentTextView.checkTextInDocument(nil)
+        contentTextView.editable = false
+        
         let alert = NSAlert()
         alert.icon = NSImage(named: "AppIcon")
         alert.messageText = "Bing Wallpaper"
-        alert.informativeText = "By tutuge.\nEmail: zekunyan@163.com\nGithub: https://github.com/zekunyan"
+        alert.accessoryView = contentTextView
         alert.alertStyle = .InformationalAlertStyle
         alert.runModal()
     }
