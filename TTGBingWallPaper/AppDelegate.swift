@@ -47,31 +47,43 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func configMenuItems() {
         let menu = NSMenu()
         
-        // Auto update 
+        // Refresh newest wall paper
+        menu.addItemWithTitle("Newest", action: #selector(menuItemNewestWallPaperClick), keyEquivalent: "n")
+        
+        // Refresh random wall paper
+        menu.addItemWithTitle("Random", action: #selector(menuItemRandomWallPaperClick), keyEquivalent: "r")
+        
+        // Sub menu
+        let subMenu = NSMenu()
+        
+        // Auto update
         autoUpdateMenuItem = NSMenuItem(title: "Auto Update", action: #selector(menuItemAutoUpdateClick), keyEquivalent: "")
+        autoUpdateMenuItem?.toolTip = "Auto update newest Microsoft Bing Daily wallpaper."
         autoUpdateMenuItem?.onStateImage = NSImage(named: "checked")
         autoUpdateMenuItem?.offStateImage = nil
         updateAutoUpdateMenuItemState()
+        subMenu.addItem(autoUpdateMenuItem!)
         
-        menu.addItem(autoUpdateMenuItem!)
-        
-        // Refresh newest wall paper
-        menu.addItem(NSMenuItem(title: "Newest", action: #selector(menuItemNewestWallPaperClick), keyEquivalent: "n"))
-        
-        // Refresh random wall paper
-        menu.addItem(NSMenuItem(title: "Random", action: #selector(menuItemRandomWallPaperClick), keyEquivalent: "r"))
+        // Open WallPaper folder
+        subMenu.addItemWithTitle("History Wallpapers", action: #selector(menuItemOpenWallPapersFolderClick), keyEquivalent: "")
         
         // Copyright
-        menu.addItem(NSMenuItem(title: "Copyright", action: #selector(menuItemCopyrightClick), keyEquivalent: ""))
+        subMenu.addItemWithTitle("Copyright", action: #selector(menuItemCopyrightClick), keyEquivalent: "")
         
         // Github
-        menu.addItem(NSMenuItem(title: "Github", action: #selector(menuItemGithubClick), keyEquivalent: ""));
+        subMenu.addItemWithTitle("Github", action: #selector(menuItemGithubClick), keyEquivalent: "");
         
         // About
-        menu.addItem(NSMenuItem(title: "About", action: #selector(menuItemAboutClick), keyEquivalent: ""))
+        subMenu.addItemWithTitle("About", action: #selector(menuItemAboutClick), keyEquivalent: "")
+        
+        // More
+        let subMenuItem = NSMenuItem()
+        subMenuItem.title = "More..."
+        subMenuItem.submenu = subMenu
+        menu.addItem(subMenuItem)
         
         // Quit
-        menu.addItem(NSMenuItem(title: "Quit", action: #selector(menuItemQuitClick), keyEquivalent: ""))
+        menu.addItemWithTitle("Quit", action: #selector(menuItemQuitClick), keyEquivalent: "")
         
         statusItem.menu = menu
     }
@@ -98,6 +110,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func menuItemRandomWallPaperClick() {
         WallPaperSevice.sharedInstance.updateAndSetRandomBingWallPaper { (success) in
             UserNotificationHelper.showWallPaperUpdateInfoWithModel()
+        }
+    }
+    
+    func menuItemOpenWallPapersFolderClick() {
+        if let folderPath = WallPaperSevice.sharedInstance.imagesFolderLocation {
+            NSWorkspace.sharedWorkspace().openURL(folderPath)
         }
     }
     
