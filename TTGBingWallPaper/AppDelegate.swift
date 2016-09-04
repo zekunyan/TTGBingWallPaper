@@ -18,10 +18,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBOutlet weak var window: NSWindow!
     
     func applicationDidFinishLaunching(aNotification: NSNotification) {
-        // Setup UI
-        configStatusButton()
-        configMenuItems()
-        
         // Setup
         WallPaperSevice.sharedInstance.setup()
         
@@ -34,6 +30,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         // Check if need update
         WallPaperSevice.sharedInstance.checkIfNeedUpdateWallPaper()
+        
+        // Setup UI
+        configStatusButton()
+        configMenuItems()
     }
     
     // MARK: Config
