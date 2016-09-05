@@ -14,7 +14,7 @@ Mac menubar app. Automate download daily picture from Microsoft Bing website and
 
 ## Download
 
-[BingWallPaper.app.zip](https://github.com/zekunyan/TTGBingWallPaper/releases/download/0.2.0/BingWallPaper.app.zip)
+[BingWallPaper.app.zip](https://github.com/zekunyan/TTGBingWallPaper/releases/download/0.3.0/BingWallPaper.app.zip)
 
 ## Install
 
