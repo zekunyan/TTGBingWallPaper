@@ -14,6 +14,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     let statusItem = NSStatusBar.systemStatusBar().statusItemWithLength(NSSquareStatusItemLength)
     
     var autoUpdateMenuItem: NSMenuItem?
+    var launchAtStartupMenuItem: NSMenuItem?
     
     @IBOutlet weak var window: NSWindow!
     
@@ -64,6 +65,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         updateAutoUpdateMenuItemState()
         subMenu.addItem(autoUpdateMenuItem!)
         
+        // Launch at startup
+        launchAtStartupMenuItem = NSMenuItem(title: "Launch at login", action: #selector(menuItemLaunchAtStartupClick), keyEquivalent: "")
+        launchAtStartupMenuItem?.toolTip = "Config BingWallPaper launch at startup."
+        launchAtStartupMenuItem?.onStateImage = NSImage(named: "checked")
+        launchAtStartupMenuItem?.offStateImage = nil
+        updateLaunchAtStartupMenuItemState()
+        subMenu.addItem(launchAtStartupMenuItem!)
+        
         // Open WallPaper folder
         subMenu.addItemWithTitle("History Wallpapers", action: #selector(menuItemOpenWallPapersFolderClick), keyEquivalent: "")
         
@@ -90,10 +99,17 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     // MARK: Actions
     
+    func menuItemLaunchAtStartupClick() {
+        StartupHelper.toggleLaunchAtStartup()
+        updateLaunchAtStartupMenuItemState()
+        
+        UserNotificationHelper.show("Config changed !", subTitle: "Launch at startup: \(StartupHelper.applicationIsInStartUpItems() ? "ON" : "OFF")", content: "")
+    }
+    
     func menuItemAutoUpdateClick() {
         let state = WallPaperSevice.sharedInstance.currentAutoUpadteSwitchState
         
-        UserNotificationHelper.show("Config change!", subTitle:  "Auto update: \(!state ? "ON" : "OFF")", content: "")
+        UserNotificationHelper.show("Config changed !", subTitle:  "Auto update: \(!state ? "ON" : "OFF")", content: "")
         
         WallPaperSevice.sharedInstance.currentAutoUpadteSwitchState = !state
         WallPaperSevice.sharedInstance.checkIfNeedUpdateWallPaper()
@@ -168,6 +184,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     private func updateAutoUpdateMenuItemState() {
         autoUpdateMenuItem?.state = Int(WallPaperSevice.sharedInstance.currentAutoUpadteSwitchState)
+    }
+    
+    private func updateLaunchAtStartupMenuItemState() {
+        launchAtStartupMenuItem?.state = Int(StartupHelper.applicationIsInStartUpItems())
     }
 }
 

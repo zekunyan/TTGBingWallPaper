@@ -13,6 +13,7 @@
 		BF61C0291D721473007FFDAF /* WallPaperModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF61C0281D721473007FFDAF /* WallPaperModel.swift */; };
 		BF61C02B1D72B8CA007FFDAF /* WallPaperSevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF61C02A1D72B8CA007FFDAF /* WallPaperSevice.swift */; };
 		BF61C02D1D72E513007FFDAF /* UserNotificationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF61C02C1D72E513007FFDAF /* UserNotificationHelper.swift */; };
+		BF7661901D7DA9040097EF06 /* StartupHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF76618F1D7DA9040097EF06 /* StartupHelper.swift */; };
 		BFEFB9B71D57351400990311 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFEFB9B61D57351400990311 /* AppDelegate.swift */; };
 		BFEFB9B91D57351400990311 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BFEFB9B81D57351400990311 /* Assets.xcassets */; };
 		BFEFB9C71D5737ED00990311 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFEFB9C41D5737ED00990311 /* SwiftyJSON.framework */; };
@@ -51,6 +52,7 @@
 		BF61C0281D721473007FFDAF /* WallPaperModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WallPaperModel.swift; sourceTree = "<group>"; };
 		BF61C02A1D72B8CA007FFDAF /* WallPaperSevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WallPaperSevice.swift; sourceTree = "<group>"; };
 		BF61C02C1D72E513007FFDAF /* UserNotificationHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserNotificationHelper.swift; sourceTree = "<group>"; };
+		BF76618F1D7DA9040097EF06 /* StartupHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartupHelper.swift; sourceTree = "<group>"; };
 		BFEFB9B31D57351400990311 /* BingWallPaper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BingWallPaper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFEFB9B61D57351400990311 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BFEFB9B81D57351400990311 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -85,6 +87,7 @@
 				BF41660B1D69E18C00697A92 /* WallPaperDownloader.swift */,
 				BF61C0211D721119007FFDAF /* WallPaperAPIManager.swift */,
 				BF61C02A1D72B8CA007FFDAF /* WallPaperSevice.swift */,
+				BF76618F1D7DA9040097EF06 /* StartupHelper.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -224,6 +227,7 @@
 				BF61C02D1D72E513007FFDAF /* UserNotificationHelper.swift in Sources */,
 				BF61C0221D721119007FFDAF /* WallPaperAPIManager.swift in Sources */,
 				BF41660C1D69E18C00697A92 /* WallPaperDownloader.swift in Sources */,
+				BF7661901D7DA9040097EF06 /* StartupHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
