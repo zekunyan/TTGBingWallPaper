@@ -163,8 +163,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         contentTextView.editable = false
         
         let alert = NSAlert()
+        let version = NSBundle.mainBundle().infoDictionary?["CFBundleShortVersionString"] as! String
+
         alert.icon = NSImage(named: "AppIcon")
-        alert.messageText = "Bing Wallpaper"
+        alert.messageText = "BingWallPaper \(version)"
         alert.accessoryView = contentTextView
         alert.alertStyle = .InformationalAlertStyle
         alert.runModal()
