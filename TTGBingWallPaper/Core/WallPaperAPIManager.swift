@@ -29,7 +29,7 @@ class WallPaperAPIManager {
             NSURLQueryItem(name: "n", value: "1"),
         ]
         
-        [WallPaperAPIManager .getBingWallPaperWithUrl(urlComponent.URL!, complete: complete)];
+        getBingWallPaperWithUrl(urlComponent.URL!, complete: complete)
     }
 
     /**
@@ -46,7 +46,7 @@ class WallPaperAPIManager {
                 NSURLQueryItem(name: "n", value: "1"),
         ]
 
-        [WallPaperAPIManager .getBingWallPaperWithUrl(urlComponent.URL!, complete: complete)];
+        getBingWallPaperWithUrl(urlComponent.URL!, complete: complete)
     }
     
     /**
