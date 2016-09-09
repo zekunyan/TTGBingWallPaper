@@ -22,7 +22,7 @@ class WallPaperAPIManager {
     static func getRandomBingWallPaper(complete complete: (model:WallPaper?) -> Void) -> Void {
         let urlComponent = NSURLComponents(string: BingWallPaper)!
         
-        let idx = arc4random_uniform(16) - 1 // [-1, 15), -1=Newest
+        let idx = Int(arc4random_uniform(16)) - 1 // [-1, 15), -1=Newest
         urlComponent.queryItems = [
             NSURLQueryItem(name: "format", value: "js"),
             NSURLQueryItem(name: "idx", value: String(idx)),
