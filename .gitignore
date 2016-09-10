@@ -96,3 +96,6 @@ xcuserdata/
 
 ## AppCode
 .idea/
+
+## Mac
+.DS_Store
