@@ -11,25 +11,25 @@ import Cocoa
 
 class WallPaperSevice {
     // Constant
-    private static let MainFolderName = "TTGBingWallPaper"
-    private static let ImagesFolderName = "BingWallPapers"
+    fileprivate static let MainFolderName = "TTGBingWallPaper"
+    fileprivate static let ImagesFolderName = "BingWallPapers"
 
-    private static let CurrentImageLocationUserDefaultKey = "CurrentImageLocationUserDefaultKey"
-    private static let LastUpdateWallPaperTimeStampUserDefaultKey = "LastUpdateWallPaperTimeStampUserDefaultKey"
-    private static let AutoUpdateSwitchUserDefaultKey = "AutoUpdateSwitchUserDefaultKey"
+    fileprivate static let CurrentImageLocationUserDefaultKey = "CurrentImageLocationUserDefaultKey"
+    fileprivate static let LastUpdateWallPaperTimeStampUserDefaultKey = "LastUpdateWallPaperTimeStampUserDefaultKey"
+    fileprivate static let AutoUpdateSwitchUserDefaultKey = "AutoUpdateSwitchUserDefaultKey"
     
-    private static let WallPaperUpdateDurationSeconds: NSTimeInterval = 12 * 3600;
+    fileprivate static let WallPaperUpdateDurationSeconds: TimeInterval = 12 * 3600;
 
     // Singleton
     static let sharedInstance = WallPaperSevice()
 
     /// Images location folder url
-    var imagesFolderLocation: NSURL?
+    var imagesFolderLocation: URL?
 
     // Current wallPaper image location
-    var currentImageLocation: NSURL? {
+    var currentImageLocation: URL? {
         didSet {
-            NSUserDefaults.standardUserDefaults().setObject(currentImageLocation?.absoluteString, forKey: WallPaperSevice.CurrentImageLocationUserDefaultKey)
+            UserDefaults.standard.set(currentImageLocation?.absoluteString, forKey: WallPaperSevice.CurrentImageLocationUserDefaultKey)
         }
     }
 
@@ -43,25 +43,25 @@ class WallPaperSevice {
     // Current auto update switch state
     var currentAutoUpadteSwitchState: Bool {
         set {
-            NSUserDefaults.standardUserDefaults().setBool(newValue, forKey: WallPaperSevice.AutoUpdateSwitchUserDefaultKey)
+            UserDefaults.standard.set(newValue, forKey: WallPaperSevice.AutoUpdateSwitchUserDefaultKey)
         }
         get {
-            return NSUserDefaults.standardUserDefaults().boolForKey(WallPaperSevice.AutoUpdateSwitchUserDefaultKey)
+            return UserDefaults.standard.bool(forKey: WallPaperSevice.AutoUpdateSwitchUserDefaultKey)
         }
     }
 
     // Last update time
-    private var lastUpdateTime: NSTimeInterval {
+    fileprivate var lastUpdateTime: TimeInterval {
         set {
-            NSUserDefaults.standardUserDefaults().setDouble(newValue, forKey: WallPaperSevice.LastUpdateWallPaperTimeStampUserDefaultKey)
+            UserDefaults.standard.set(newValue, forKey: WallPaperSevice.LastUpdateWallPaperTimeStampUserDefaultKey)
         }
         get {
-            return NSUserDefaults.standardUserDefaults().doubleForKey(WallPaperSevice.LastUpdateWallPaperTimeStampUserDefaultKey)
+            return UserDefaults.standard.double(forKey: WallPaperSevice.LastUpdateWallPaperTimeStampUserDefaultKey)
         }
     }
     
     // Update timer
-    private var updateTimer: NSTimer?
+    fileprivate var updateTimer: Timer?
     
     // MARK: Public methods
 
@@ -72,9 +72,9 @@ class WallPaperSevice {
         }
 
         // Create folder
-        let applicationSupportedFolderUrl = NSFileManager.defaultManager().URLsForDirectory(.ApplicationSupportDirectory, inDomains: NSSearchPathDomainMask.UserDomainMask).first
-        let mainFolderUrl = applicationSupportedFolderUrl?.URLByAppendingPathComponent(WallPaperSevice.MainFolderName, isDirectory: true)
-        imagesFolderLocation = mainFolderUrl?.URLByAppendingPathComponent(WallPaperSevice.ImagesFolderName, isDirectory: true)
+        let applicationSupportedFolderUrl = FileManager.default.urls(for: .applicationSupportDirectory, in: FileManager.SearchPathDomainMask.userDomainMask).first
+        let mainFolderUrl = applicationSupportedFolderUrl?.appendingPathComponent(WallPaperSevice.MainFolderName, isDirectory: true)
+        imagesFolderLocation = mainFolderUrl?.appendingPathComponent(WallPaperSevice.ImagesFolderName, isDirectory: true)
 
         guard let _ = imagesFolderLocation else {
             print("Create images folder url error.")
@@ -82,7 +82,7 @@ class WallPaperSevice {
         }
 
         do {
-            try NSFileManager.defaultManager().createDirectoryAtURL(imagesFolderLocation!, withIntermediateDirectories: true, attributes: nil)
+            try FileManager.default.createDirectory(at: imagesFolderLocation!, withIntermediateDirectories: true, attributes: nil)
         } catch let error {
             print("Create images folder error: \(error)")
             exit(0)
@@ -92,8 +92,8 @@ class WallPaperSevice {
         currentModel = WallPaper.getFromLocal()
 
         // Get local current wall paper image location
-        if let location = NSUserDefaults.standardUserDefaults().objectForKey(WallPaperSevice.CurrentImageLocationUserDefaultKey) as? String {
-            currentImageLocation = NSURL(string: location)
+        if let location = UserDefaults.standard.object(forKey: WallPaperSevice.CurrentImageLocationUserDefaultKey) as? String {
+            currentImageLocation = URL(string: location)
         }
     }
     
@@ -109,8 +109,8 @@ class WallPaperSevice {
             return
         }
         
-        let currentTime = NSDate().timeIntervalSince1970
-        var nextUpdateDuration: NSTimeInterval = 0
+        let currentTime = Date().timeIntervalSince1970
+        var nextUpdateDuration: TimeInterval = 0
         
         if currentTime - lastUpdateTime < WallPaperSevice.WallPaperUpdateDurationSeconds {
             // Not yet, continue the timer
@@ -125,7 +125,7 @@ class WallPaperSevice {
         }
         
         // Create timer
-        updateTimer = NSTimer.scheduledTimerWithTimeInterval(nextUpdateDuration, target: self, selector: #selector(checkIfNeedUpdateWallPaper), userInfo: nil, repeats: false)
+        updateTimer = Timer.scheduledTimer(timeInterval: nextUpdateDuration, target: self, selector: #selector(checkIfNeedUpdateWallPaper), userInfo: nil, repeats: false)
     }
 
     /**
@@ -133,7 +133,7 @@ class WallPaperSevice {
      
      - parameter complete: complete callback
      */
-    func updateAndSetNewestBingWallPaper(complete: ((success:Bool) -> Void)) {
+    func updateAndSetNewestBingWallPaper(_ complete: @escaping ((_ success:Bool) -> Void)) {
         WallPaperAPIManager.getNewestBingWallPaper {
             (model) in
             self.updateWallPaperFromModel(model, complete: complete)
@@ -145,7 +145,7 @@ class WallPaperSevice {
      
      - parameter complete: complete callback
      */
-    func updateAndSetRandomBingWallPaper(complete: ((success:Bool) -> Void)) {
+    func updateAndSetRandomBingWallPaper(_ complete: @escaping ((_ success:Bool) -> Void)) {
         WallPaperAPIManager.getRandomBingWallPaper {
             (model) in
             self.updateWallPaperFromModel(model, complete: complete)
@@ -160,11 +160,11 @@ class WallPaperSevice {
      - parameter model:    new wallpaper model
      - parameter complete: complete callback
      */
-    private func updateWallPaperFromModel(model: WallPaper?, complete: ((success:Bool) -> Void)) {
+    fileprivate func updateWallPaperFromModel(_ model: WallPaper?, complete: @escaping ((_ success:Bool) -> Void)) {
         // Check model
         guard let _ = model else {
             print("Get newest wall paper data from bing failed.")
-            complete(success: false)
+            complete(false)
             return
         }
 
@@ -172,38 +172,38 @@ class WallPaperSevice {
         self.currentModel = model
 
         // Create Url
-        let imageUrl = NSURL(string: model!.imageUrl)!
+        let imageUrl = URL(string: model!.imageUrl)!
 
         // Download
         WallPaperDownloader.downloadImageFromUrl(imageUrl, complete: {
             (imageTempLocation, suggestedFilename) in
 
             // Check download file and name
-            guard let _ = imageTempLocation, _ = suggestedFilename else {
+            guard let _ = imageTempLocation, let _ = suggestedFilename else {
                 print("Download wall paper image failed.")
-                complete(success: false)
+                complete(false)
                 return
             }
 
             // Generate final location
-            guard let imageFinalLocation = self.imagesFolderLocation?.URLByAppendingPathComponent(model!.startDate + "_" + suggestedFilename!) else {
+            guard let imageFinalLocation = self.imagesFolderLocation?.appendingPathComponent(model!.startDate + "_" + suggestedFilename!) else {
                 print("Create final image location url failed.")
-                complete(success: false)
+                complete(false)
                 return
             }
 
             // Delete old image file
             do {
-                try NSFileManager.defaultManager().removeItemAtURL(imageFinalLocation)
+                try FileManager.default.removeItem(at: imageFinalLocation)
             } catch {
             }
 
             // Save new image file
             do {
-                try NSFileManager.defaultManager().moveItemAtURL(imageTempLocation!, toURL: imageFinalLocation)
+                try FileManager.default.moveItem(at: imageTempLocation!, to: imageFinalLocation)
             } catch let error {
                 print("Move image to final location error: \(error)")
-                complete(success: false)
+                complete(false)
                 return
             }
 
@@ -214,7 +214,7 @@ class WallPaperSevice {
 
             // Set WallPaper
             let setWallPaperSuccess = WallPaperSevice.setWallPaperWithImagePath(self.currentImageLocation!)
-            complete(success: setWallPaperSuccess)
+            complete(setWallPaperSuccess)
         })
     }
 
@@ -225,11 +225,11 @@ class WallPaperSevice {
      
      - returns: Success
      */
-    private static func setWallPaperWithImagePath(imageLocationUrl: NSURL) -> Bool {
+    fileprivate static func setWallPaperWithImagePath(_ imageLocationUrl: URL) -> Bool {
         for screen in NSScreen.screens()! {
             do {
-                try NSWorkspace.sharedWorkspace().setDesktopImageURL(imageLocationUrl, forScreen: screen,
-                        options: NSWorkspace.sharedWorkspace().desktopImageOptionsForScreen(NSScreen.mainScreen()!)!)
+                try NSWorkspace.shared().setDesktopImageURL(imageLocationUrl, for: screen,
+                        options: NSWorkspace.shared().desktopImageOptions(for: NSScreen.main()!)!)
             } catch let error {
                 print("Set wall paper error: \(error)")
                 return false

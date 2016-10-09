@@ -11,14 +11,14 @@ import Cocoa
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
     
-    let statusItem = NSStatusBar.systemStatusBar().statusItemWithLength(NSSquareStatusItemLength)
+    let statusItem = NSStatusBar.system().statusItem(withLength: NSSquareStatusItemLength)
     
     var autoUpdateMenuItem: NSMenuItem?
     var launchAtStartupMenuItem: NSMenuItem?
     
     @IBOutlet weak var window: NSWindow!
     
-    func applicationDidFinishLaunching(aNotification: NSNotification) {
+    func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Setup
         WallPaperSevice.sharedInstance.setup()
         
@@ -26,8 +26,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         WallPaperSevice.sharedInstance.updateAndSetNewestBingWallPaper { (success) in}
         
         // Set Wake from sleep notification
-        NSWorkspace.sharedWorkspace().notificationCenter.addObserver(self, selector:
-            #selector(didWakeFromSleep), name: NSWorkspaceDidWakeNotification, object: nil)
+        NSWorkspace.shared().notificationCenter.addObserver(self, selector:
+            #selector(didWakeFromSleep), name: NSNotification.Name.NSWorkspaceDidWake, object: nil)
         
         // Check if need update
         WallPaperSevice.sharedInstance.checkIfNeedUpdateWallPaper()
@@ -49,10 +49,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let menu = NSMenu()
         
         // Refresh newest wall paper
-        menu.addItemWithTitle("Newest", action: #selector(menuItemNewestWallPaperClick), keyEquivalent: "n")
+        menu.addItem(withTitle: "Newest", action: #selector(menuItemNewestWallPaperClick), keyEquivalent: "n")
         
         // Refresh random wall paper
-        menu.addItemWithTitle("Random", action: #selector(menuItemRandomWallPaperClick), keyEquivalent: "r")
+        menu.addItem(withTitle: "Random", action: #selector(menuItemRandomWallPaperClick), keyEquivalent: "r")
         
         // Sub menu
         let subMenu = NSMenu()
@@ -74,16 +74,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         subMenu.addItem(launchAtStartupMenuItem!)
         
         // Open WallPaper folder
-        subMenu.addItemWithTitle("History Wallpapers", action: #selector(menuItemOpenWallPapersFolderClick), keyEquivalent: "")
+        subMenu.addItem(withTitle: "History Wallpapers", action: #selector(menuItemOpenWallPapersFolderClick), keyEquivalent: "")
         
         // Copyright
-        subMenu.addItemWithTitle("Copyright", action: #selector(menuItemCopyrightClick), keyEquivalent: "")
+        subMenu.addItem(withTitle: "Copyright", action: #selector(menuItemCopyrightClick), keyEquivalent: "")
         
         // Github
-        subMenu.addItemWithTitle("Github", action: #selector(menuItemGithubClick), keyEquivalent: "");
+        subMenu.addItem(withTitle: "Github", action: #selector(menuItemGithubClick), keyEquivalent: "");
         
         // About
-        subMenu.addItemWithTitle("About", action: #selector(menuItemAboutClick), keyEquivalent: "")
+        subMenu.addItem(withTitle: "About", action: #selector(menuItemAboutClick), keyEquivalent: "")
         
         // More
         let subMenuItem = NSMenuItem()
@@ -92,7 +92,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         menu.addItem(subMenuItem)
         
         // Quit
-        menu.addItemWithTitle("Quit", action: #selector(menuItemQuitClick), keyEquivalent: "")
+        menu.addItem(withTitle: "Quit", action: #selector(menuItemQuitClick), keyEquivalent: "")
         
         statusItem.menu = menu
     }
@@ -131,65 +131,65 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     func menuItemOpenWallPapersFolderClick() {
         if let folderPath = WallPaperSevice.sharedInstance.imagesFolderLocation {
-            NSWorkspace.sharedWorkspace().openURL(folderPath)
+            NSWorkspace.shared().open(folderPath as URL)
         }
     }
     
     func menuItemCopyrightClick() {
-        if let copyrightUrl = NSURL(string: WallPaperSevice.sharedInstance.currentModel?.copyRightUrl ?? WallPaperAPIManager.BingHost) {
-            NSWorkspace.sharedWorkspace().openURL(copyrightUrl)
+        if let copyrightUrl = URL(string: WallPaperSevice.sharedInstance.currentModel?.copyRightUrl ?? WallPaperAPIManager.BingHost) {
+            NSWorkspace.shared().open(copyrightUrl)
         }
     }
     
     func menuItemGithubClick() {
-        if let githubUrl = NSURL(string: "https://github.com/zekunyan/TTGBingWallPaper") {
-            NSWorkspace.sharedWorkspace().openURL(githubUrl)
+        if let githubUrl = URL(string: "https://github.com/zekunyan/TTGBingWallPaper") {
+            NSWorkspace.shared().open(githubUrl)
         }
     }
     
     func menuItemAboutClick() {
         let contentTextView = NSTextView()
         
-        contentTextView.frame = CGRectMake(0, 0, 300, 60)
+        contentTextView.frame = CGRect(x: 0, y: 0, width: 300, height: 60)
         contentTextView.string = "By tutuge.\nEmail: zekunyan@163.com\nGithub: https://github.com/zekunyan"
         contentTextView.sizeToFit()
         
         contentTextView.drawsBackground = false
-        contentTextView.font = NSFont.systemFontOfSize(14)
+        contentTextView.font = NSFont.systemFont(ofSize: 14)
         
-        contentTextView.editable = true
+        contentTextView.isEditable = true
         contentTextView.enabledTextCheckingTypes = NSTextCheckingAllTypes
         contentTextView.checkTextInDocument(nil)
-        contentTextView.editable = false
+        contentTextView.isEditable = false
         
         let alert = NSAlert()
-        let version = NSBundle.mainBundle().infoDictionary?["CFBundleShortVersionString"] as! String
+        let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String
 
         alert.icon = NSImage(named: "AppIcon")
         alert.messageText = "BingWallPaper \(version)"
         alert.accessoryView = contentTextView
-        alert.alertStyle = .InformationalAlertStyle
+        alert.alertStyle = .informational
         alert.runModal()
     }
     
     func menuItemQuitClick() {
-        NSApplication.sharedApplication().terminate(nil)
+        NSApplication.shared().terminate(nil)
     }
     
     // MARK: NSWorkspaceDidWakeNotification
     
-    @objc private func didWakeFromSleep() {
+    @objc fileprivate func didWakeFromSleep() {
         WallPaperSevice.sharedInstance.checkIfNeedUpdateWallPaper()
     }
     
     // MARK: Private methods
     
-    private func updateAutoUpdateMenuItemState() {
-        autoUpdateMenuItem?.state = Int(WallPaperSevice.sharedInstance.currentAutoUpadteSwitchState)
+    fileprivate func updateAutoUpdateMenuItemState() {
+        autoUpdateMenuItem?.state = WallPaperSevice.sharedInstance.currentAutoUpadteSwitchState ? 1 : 0
     }
     
-    private func updateLaunchAtStartupMenuItemState() {
-        launchAtStartupMenuItem?.state = Int(StartupHelper.applicationIsInStartUpItems())
+    fileprivate func updateLaunchAtStartupMenuItemState() {
+        launchAtStartupMenuItem?.state = StartupHelper.applicationIsInStartUpItems() ? 1 : 0
     }
 }
 

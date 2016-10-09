@@ -19,17 +19,17 @@ class WallPaperAPIManager {
      
      - parameter complete: complete callback
      */
-    static func getRandomBingWallPaper(complete complete: (model:WallPaper?) -> Void) -> Void {
-        let urlComponent = NSURLComponents(string: BingWallPaper)!
+    static func getRandomBingWallPaper(complete: @escaping (_ model:WallPaper?) -> Void) -> Void {
+        var urlComponent = URLComponents(string: BingWallPaper)!
         
         let idx = Int(arc4random_uniform(16)) - 1 // [-1, 15), -1=Newest
         urlComponent.queryItems = [
-            NSURLQueryItem(name: "format", value: "js"),
-            NSURLQueryItem(name: "idx", value: String(idx)),
-            NSURLQueryItem(name: "n", value: "1"),
+            URLQueryItem(name: "format", value: "js"),
+            URLQueryItem(name: "idx", value: String(idx)),
+            URLQueryItem(name: "n", value: "1"),
         ]
         
-        getBingWallPaperWithUrl(urlComponent.URL!, complete: complete)
+        getBingWallPaperWithUrl(urlComponent.url!, complete: complete)
     }
 
     /**
@@ -37,16 +37,16 @@ class WallPaperAPIManager {
      
      - parameter complete: complete callback
      */
-    static func getNewestBingWallPaper(complete complete: (model:WallPaper?) -> Void) -> Void {
-        let urlComponent = NSURLComponents(string: BingWallPaper)!
+    static func getNewestBingWallPaper(complete: @escaping (_ model:WallPaper?) -> Void) -> Void {
+        var urlComponent = URLComponents(string: BingWallPaper)!
         
         urlComponent.queryItems = [
-                NSURLQueryItem(name: "format", value: "js"),
-                NSURLQueryItem(name: "idx", value: "-1"),
-                NSURLQueryItem(name: "n", value: "1"),
+                URLQueryItem(name: "format", value: "js"),
+                URLQueryItem(name: "idx", value: "-1"),
+                URLQueryItem(name: "n", value: "1"),
         ]
 
-        getBingWallPaperWithUrl(urlComponent.URL!, complete: complete)
+        getBingWallPaperWithUrl(urlComponent.url!, complete: complete)
     }
     
     /**
@@ -55,20 +55,20 @@ class WallPaperAPIManager {
      - parameter url:      url
      - parameter complete: complete callback
      */
-    private static func getBingWallPaperWithUrl(url: NSURL, complete: (model:WallPaper?) -> Void) -> Void {
-        NSURLSession.sharedSession().dataTaskWithURL(url, completionHandler: {
+    fileprivate static func getBingWallPaperWithUrl(_ url: URL, complete: @escaping (_ model:WallPaper?) -> Void) -> Void {
+        URLSession.shared.dataTask(with: url, completionHandler: {
             (data, response, error) in
-            guard let _: NSData = data else {
-                complete(model: nil)
+            guard let _: Data = data else {
+                complete(nil)
                 return
             }
             
             let json = JSON(data: data!)
             if json["images"].arrayValue.count > 0 {
                 let model = WallPaper(jsonObject: json["images"].arrayValue.first!)
-                complete(model: model)
+                complete(model)
             } else {
-                complete(model: nil)
+                complete(nil)
             }
         }).resume()
     }

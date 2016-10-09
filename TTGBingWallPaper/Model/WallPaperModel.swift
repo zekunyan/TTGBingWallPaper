@@ -12,10 +12,10 @@ import SwiftyJSON
 
 struct WallPaper {
     // Constant: UserDefault key
-    private static let WallPaperModelUserDefaultKey = "WallPaperModelUserDefaultKey"
+    fileprivate static let WallPaperModelUserDefaultKey = "WallPaperModelUserDefaultKey"
 
     // Original json object
-    private let originalJson: JSON
+    fileprivate let originalJson: JSON
     
     // Model property
     let startDate: String
@@ -34,18 +34,18 @@ struct WallPaper {
 
         // Check and set imageUrl
         let url = json["url"].stringValue
-        imageUrl = url.containsString("http://") ? url : WallPaperAPIManager.BingHost.stringByAppendingString(url)
+        imageUrl = url.contains("http://") ? url : WallPaperAPIManager.BingHost + url
         
         // Save Json
         originalJson = json
     }
     
     func saveToLocal() {
-        NSUserDefaults.standardUserDefaults().setObject(originalJson.dictionaryObject, forKey: WallPaper.WallPaperModelUserDefaultKey)
+        UserDefaults.standard.set(originalJson.dictionaryObject, forKey: WallPaper.WallPaperModelUserDefaultKey)
     }
     
     static func getFromLocal() -> WallPaper? {
-        if let jsonDict = NSUserDefaults.standardUserDefaults().objectForKey(WallPaper.WallPaperModelUserDefaultKey) {
+        if let jsonDict = UserDefaults.standard.object(forKey: WallPaper.WallPaperModelUserDefaultKey) {
             return WallPaper(jsonObject: JSON(jsonDict))
         }
         return nil

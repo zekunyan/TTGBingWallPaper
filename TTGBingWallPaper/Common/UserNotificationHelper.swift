@@ -15,16 +15,16 @@ class UserNotificationHelper {
                                     content: WallPaperSevice.sharedInstance.currentModel?.copyRight)
     }
     
-    static func show(title:String?, subTitle:String?, content:String?) {
-        NSUserNotificationCenter.defaultUserNotificationCenter().removeAllDeliveredNotifications();
+    static func show(_ title:String?, subTitle:String?, content:String?) {
+        NSUserNotificationCenter.default.removeAllDeliveredNotifications();
         
         let notification = NSUserNotification()
         notification.title = title
         notification.subtitle = subTitle
         notification.informativeText = content
         
-        notification.deliveryDate = NSDate(timeIntervalSinceNow: 0.5)
+        notification.deliveryDate = Date(timeIntervalSinceNow: 0.5)
         
-        NSUserNotificationCenter.defaultUserNotificationCenter().scheduleNotification(notification)
+        NSUserNotificationCenter.default.scheduleNotification(notification)
     }
 }

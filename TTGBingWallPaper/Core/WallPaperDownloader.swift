@@ -10,10 +10,10 @@ import Foundation
 import Cocoa
 
 class WallPaperDownloader {
-    static func downloadImageFromUrl(imageUrl: NSURL, complete: ((imageTempLocation:NSURL?, suggestFileName:String?) -> Void)) {
-        NSURLSession.sharedSession().downloadTaskWithURL(imageUrl) {
+    static func downloadImageFromUrl(_ imageUrl: URL, complete: @escaping ((_ imageTempLocation:URL?, _ suggestFileName:String?) -> Void)) {
+        URLSession.shared.downloadTask(with: imageUrl, completionHandler: {
             (tempLocationUrl, response, error) in
-            complete(imageTempLocation: tempLocationUrl, suggestFileName: response?.suggestedFilename)
-        }.resume()
+            complete(tempLocationUrl, response?.suggestedFilename)
+        }) .resume()
     }
 }
