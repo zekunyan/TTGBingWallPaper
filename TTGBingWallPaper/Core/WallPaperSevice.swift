@@ -10,8 +10,8 @@ import Foundation
 import Cocoa
 
 class WallPaperSevice {
-    //'en-US', 'de-DE', 'en-AU', 'en-CA', 'en-NZ', 'en-UK', 'ja-JP', 'zh-CN'
-    static let LocationMap:[String:String] = ["中国":"zh-CN","美国":"en-US","澳大利亚":"en-AU","英国":"en-UK","日本":"ja-JP","德国":"de-DE"]
+    static let LocationMap:[String:String] = ["LOCAL.CN":"zh-CN","LOCAL.USA":"en-US","LOCAL.AU":"en-AU","LOCAL.UK":"en-UK","LOCAL.JP":"ja-JP","LOCAL.DE":"de-DE"]
+    
     // Constant
     fileprivate static let MainFolderName = "TTGBingWallPaper"
     fileprivate static let ImagesFolderName = "BingWallPapers"

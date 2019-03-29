@@ -1,0 +1,30 @@
+/* 
+  Localizable.strings
+  BingWallPaper
+
+  Created by wanghw on 20190329.
+  Copyright © 2019 tutuge. All rights reserved.
+*/
+"NEWEST" = "Newest";
+"RANDOM" = "Random";
+"PHOTOINFO" = "Photo info";
+"LOCAL" = "Local";
+"AUTOUPDATE" = "Auto Update";
+"LAUNCH" = "Launch BingWallpaper At Starup";
+"AUTOUPDATE.TIP" = "Auto update newest Microsoft Bing Daily wallpaper";
+"LAUNCH.TIP" = "Config BingWallPaper launch at startup";
+"HISTORY" = "Historical Wallpaper";
+"ABOUT" = "About BingWallpaper";
+"QUIT" = "Quit BingWallpaper";
+"MESSATE.TITLE" = "Setting Updates!";
+"MESSATE.SUBTITLE.LAUNCH" = "Launch BingWallpaper At Startup : ";
+"MESSATE.SUBTITLE.AUTOUPDATE" = "Auto Update : ";
+"MESSATE.ON" = "On";
+"MESSATE.OFF" = "Off";
+"UPDATE" = "Update!";
+"LOCAL.CN" = "China";
+"LOCAL.USA" = "United States";
+"LOCAL.UK" = "United Kingdom";
+"LOCAL.JP" = "Japan";
+"LOCAL.DE" = "Germany";
+"LOCAL.AU" = "Australia";

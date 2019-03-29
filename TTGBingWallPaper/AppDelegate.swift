@@ -49,53 +49,56 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let menu = NSMenu()
         
         // Refresh newest wall paper
-        menu.addItem(withTitle: "最新", action: #selector(menuItemNewestWallPaperClick), keyEquivalent: "n")
+        menu.addItem(withTitle: NSLocalizedString("NEWEST",comment:""), action: #selector(menuItemNewestWallPaperClick), keyEquivalent: "n")
         // Refresh random wall paper
-        menu.addItem(withTitle: "随机", action: #selector(menuItemRandomWallPaperClick), keyEquivalent: "r")
+        menu.addItem(withTitle: NSLocalizedString("RANDOM",comment:""), action: #selector(menuItemRandomWallPaperClick), keyEquivalent: "r")
         // Copyright
-        menu.addItem(withTitle: "图片信息", action: #selector(menuItemCopyrightClick), keyEquivalent: "i")
+        menu.addItem(withTitle: NSLocalizedString("PHOTOINFO",comment:""), action: #selector(menuItemCopyrightClick), keyEquivalent: "i")
         
         
         // Sub menu
         let subMenu = NSMenu()
-        WallPaperSevice.LocationMap .forEach { (_ key:String,_ value:String) in
-            subMenu.addItem(withTitle: key, action: #selector(switchLocationMenuItemState), keyEquivalent: "")
+        
+        WallPaperSevice.LocationMap.sorted(by: <) .forEach { (_ key:String,_ value:String) in
+            let locationMenuItem = NSMenuItem(title: NSLocalizedString(key,comment:""), action: #selector(switchLocationMenuItemState), keyEquivalent: "")
+            locationMenuItem.representedObject = key
+            subMenu.addItem(locationMenuItem)
         }
         
         locationMenuItem = NSMenuItem()
-        locationMenuItem?.title = "国家与地区"
+        locationMenuItem?.title = NSLocalizedString("LOCAL",comment:"")
         locationMenuItem?.submenu = subMenu
         locationMenuItem?.keyEquivalent = "g"
         menu.addItem(locationMenuItem!)
         updateLocationMenuItemState()
         
         // Auto update
-        autoUpdateMenuItem = NSMenuItem(title: "自动更新", action: #selector(menuItemAutoUpdateClick), keyEquivalent: "e")
-        autoUpdateMenuItem?.toolTip = "Auto update newest Microsoft Bing Daily wallpaper."
+        autoUpdateMenuItem = NSMenuItem(title: NSLocalizedString("AUTOUPDATE",comment:""), action: #selector(menuItemAutoUpdateClick), keyEquivalent: "e")
+        autoUpdateMenuItem?.toolTip = NSLocalizedString("AUTOUPDATE.TIP",comment:"")
         autoUpdateMenuItem?.onStateImage = NSImage(named: "checked")
         autoUpdateMenuItem?.offStateImage = nil
         updateAutoUpdateMenuItemState()
         menu.addItem(autoUpdateMenuItem!)
         
         // Launch at startup
-        launchAtStartupMenuItem = NSMenuItem(title: "开机启动", action: #selector(menuItemLaunchAtStartupClick), keyEquivalent: "")
-        launchAtStartupMenuItem?.toolTip = "Config BingWallPaper launch at startup."
+        launchAtStartupMenuItem = NSMenuItem(title: NSLocalizedString("LAUNCH",comment:""), action: #selector(menuItemLaunchAtStartupClick), keyEquivalent: "")
+        launchAtStartupMenuItem?.toolTip = NSLocalizedString("LAUNCH.TIP",comment:"")
         launchAtStartupMenuItem?.onStateImage = NSImage(named: "checked")
         launchAtStartupMenuItem?.offStateImage = nil
         updateLaunchAtStartupMenuItemState()
         menu.addItem(launchAtStartupMenuItem!)
         
         // Open WallPaper folder
-        menu.addItem(withTitle: "壁纸下载", action: #selector(menuItemOpenWallPapersFolderClick), keyEquivalent: "f")
+        menu.addItem(withTitle: NSLocalizedString("HISTORY",comment:""), action: #selector(menuItemOpenWallPapersFolderClick), keyEquivalent: "f")
         
         // Github
         //subMenu.addItem(withTitle: "Github", action: #selector(menuItemGithubClick), keyEquivalent: "");
         
         // About
-        menu.addItem(withTitle: "关于", action: #selector(menuItemAboutClick), keyEquivalent: "a")
+        menu.addItem(withTitle: NSLocalizedString("ABOUT",comment:""), action: #selector(menuItemAboutClick), keyEquivalent: "a")
         
         // Quit
-        menu.addItem(withTitle: "退出", action: #selector(menuItemQuitClick), keyEquivalent: "q")
+        menu.addItem(withTitle: NSLocalizedString("QUIT",comment:""), action: #selector(menuItemQuitClick), keyEquivalent: "q")
         
         statusItem.menu = menu
     }
@@ -106,13 +109,19 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         StartupHelper.toggleLaunchAtStartup()
         updateLaunchAtStartupMenuItemState()
         
-        UserNotificationHelper.show("Config changed !", subTitle: "Launch at startup: \(StartupHelper.applicationIsInStartUpItems() ? "ON" : "OFF")", content: "")
+        let subTitle:String = NSLocalizedString("MESSATE.SUBTITLE.AUTOUPDATE",comment:"")
+        let open:String = StartupHelper.applicationIsInStartUpItems() ? NSLocalizedString("MESSATE.ON",comment:"") : NSLocalizedString("MESSATE.OFF",comment:"")
+        
+        UserNotificationHelper.show(NSLocalizedString("MESSATE.TITLE",comment:""), subTitle: String(format: "%s%s", subTitle,open), content: "")
     }
     
-    @objc func menuItemAutoUpdateClick() {
+    @objc func menuItemAutoUpdateClick(local:String) {
         let state = WallPaperSevice.sharedInstance.currentAutoUpadteSwitchState
         
-        UserNotificationHelper.show("Config changed !", subTitle:  "Auto update: \(!state ? "ON" : "OFF")", content: "")
+        let subTitle:String = NSLocalizedString("MESSATE.SUBTITLE.AUTOUPDATE",comment:"")
+        let open:String = state ? NSLocalizedString("MESSATE.ON",comment:"") : NSLocalizedString("MESSATE.OFF",comment:"")
+        
+        UserNotificationHelper.show(NSLocalizedString("MESSATE.TITLE",comment:""), subTitle: String(format: "%s%s", subTitle,open), content: "")
         
         WallPaperSevice.sharedInstance.currentAutoUpadteSwitchState = !state
         WallPaperSevice.sharedInstance.checkIfNeedUpdateWallPaper()
@@ -201,12 +210,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             menuItem.state = NSControl.StateValue(rawValue: 0);
         })
         menuItem.state = NSControl.StateValue(rawValue: 1);
-        WallPaperSevice.sharedInstance.currentBingLocationSwitchState = menuItem.title;
+        let local = menuItem.representedObject as! String
+        WallPaperSevice.sharedInstance.currentBingLocationSwitchState = local;
         
     }
     fileprivate func updateLocationMenuItemState() {
         locationMenuItem?.submenu?.items.forEach({ (menuItem) in
-            if(WallPaperSevice.LocationMap[menuItem.title] == WallPaperSevice.sharedInstance.currentBingLocationSwitchState){
+            let local = menuItem.representedObject as! String
+            if(WallPaperSevice.LocationMap[local] == WallPaperSevice.sharedInstance.currentBingLocationSwitchState){
                 menuItem.state = NSControl.StateValue(rawValue: 1);
                 return
             }

@@ -10,7 +10,7 @@ import Foundation
 
 class UserNotificationHelper {
     static func showWallPaperUpdateInfoWithModel() {
-        UserNotificationHelper.show("Update !",
+        UserNotificationHelper.show(NSLocalizedString("UPDATE",comment:""),
                                     subTitle: "",
                                     content: WallPaperSevice.sharedInstance.currentModel?.copyRight)
     }
