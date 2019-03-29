@@ -47,7 +47,6 @@ class WallPaperAPIManager {
             URLQueryItem(name: "n", value: "1"),
             URLQueryItem(name: "mkt", value: WallPaperSevice.sharedInstance.currentBingLocationSwitchState),
         ]
-        print("\(urlComponent)")
         
         getBingWallPaperWithUrl(urlComponent.url!, complete: complete)
     }
@@ -68,7 +67,6 @@ class WallPaperAPIManager {
                 let json = try JSON(data: data!)
                 if json["images"].arrayValue.count > 0 {
                     let model = WallPaper(jsonObject: json["images"].arrayValue.first!)
-                    print("\(model)")
                     complete(model)
                 } else {
                     complete(nil)
