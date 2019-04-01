@@ -12,16 +12,16 @@ class StartupHelper {
     static func applicationIsInStartUpItems() -> Bool {
         return (itemReferencesInLoginItems().existingReference != nil)
     }
-
+    
     static func itemReferencesInLoginItems() -> (existingReference:LSSharedFileListItem?, lastReference:LSSharedFileListItem?) {
         let appUrl = URL(fileURLWithPath: Bundle.main.bundlePath)
-
+        
         if let loginItemsRef = LSSharedFileListCreate(nil, kLSSharedFileListSessionLoginItems.takeRetainedValue(), nil).takeRetainedValue() as LSSharedFileList? {
             let loginItems: NSArray = LSSharedFileListCopySnapshot(loginItemsRef, nil).takeRetainedValue() as NSArray
-
+            
             if (loginItems.count > 0) {
                 let lastItemRef: LSSharedFileListItem = loginItems.lastObject as! LSSharedFileListItem
-
+                
                 for i in 0 ..< loginItems.count {
                     let currentItemRef: LSSharedFileListItem = loginItems.object(at: i) as! LSSharedFileListItem
                     if let itemURL = LSSharedFileListItemCopyResolvedURL(currentItemRef, 0, nil) {
@@ -30,7 +30,7 @@ class StartupHelper {
                         }
                     }
                 }
-
+                
                 // Not found
                 return (nil, lastItemRef)
             } else {
@@ -41,11 +41,11 @@ class StartupHelper {
         }
         return (nil, nil)
     }
-
+    
     static func toggleLaunchAtStartup() {
         let itemReferences = itemReferencesInLoginItems()
         let shouldBeToggled = (itemReferences.existingReference == nil)
-
+        
         if let loginItemsRef = LSSharedFileListCreate(nil, kLSSharedFileListSessionLoginItems.takeRetainedValue(), nil).takeRetainedValue() as LSSharedFileList? {
             if shouldBeToggled {
                 if let appUrl: CFURL = URL(fileURLWithPath: Bundle.main.bundlePath) as CFURL? {

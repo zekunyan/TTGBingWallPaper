@@ -11,8 +11,8 @@ import Cocoa
 import SwiftyJSON
 
 class WallPaperAPIManager {
-    static let BingHost = "http://www.bing.com"
-    static let BingWallPaper = "http://www.bing.com/HPImageArchive.aspx"
+    static let BingHost = "https://www.bing.com"
+    static let BingWallPaper = "https://www.bing.com/HPImageArchive.aspx"
     
     /**
      Get random WallPaper Model
@@ -27,11 +27,12 @@ class WallPaperAPIManager {
             URLQueryItem(name: "format", value: "js"),
             URLQueryItem(name: "idx", value: String(idx)),
             URLQueryItem(name: "n", value: "1"),
+            URLQueryItem(name: "mkt", value: WallPaperSevice.sharedInstance.currentBingLocationSwitchState),
         ]
         
         getBingWallPaperWithUrl(urlComponent.url!, complete: complete)
     }
-
+    
     /**
      Get newest WallPaper Model
      
@@ -41,11 +42,12 @@ class WallPaperAPIManager {
         var urlComponent = URLComponents(string: BingWallPaper)!
         
         urlComponent.queryItems = [
-                URLQueryItem(name: "format", value: "js"),
-                URLQueryItem(name: "idx", value: "-1"),
-                URLQueryItem(name: "n", value: "1"),
+            URLQueryItem(name: "format", value: "js"),
+            URLQueryItem(name: "idx", value: "-1"),
+            URLQueryItem(name: "n", value: "1"),
+            URLQueryItem(name: "mkt", value: WallPaperSevice.sharedInstance.currentBingLocationSwitchState),
         ]
-
+        
         getBingWallPaperWithUrl(urlComponent.url!, complete: complete)
     }
     
@@ -56,20 +58,22 @@ class WallPaperAPIManager {
      - parameter complete: complete callback
      */
     fileprivate static func getBingWallPaperWithUrl(_ url: URL, complete: @escaping (_ model:WallPaper?) -> Void) -> Void {
-        URLSession.shared.dataTask(with: url, completionHandler: {
-            (data, response, error) in
+        let task = URLSession.shared.dataTask(with: URLRequest(url: url)) { (data, response, error)  in
             guard let _: Data = data else {
                 complete(nil)
                 return
             }
+            do {
+                let json = try JSON(data: data!)
+                if json["images"].arrayValue.count > 0 {
+                    let model = WallPaper(jsonObject: json["images"].arrayValue.first!)
+                    complete(model)
+                } else {
+                    complete(nil)
+                }
+            }catch{}
             
-            let json = JSON(data: data!)
-            if json["images"].arrayValue.count > 0 {
-                let model = WallPaper(jsonObject: json["images"].arrayValue.first!)
-                complete(model)
-            } else {
-                complete(nil)
-            }
-        }).resume()
+        };
+        task.resume();
     }
 }

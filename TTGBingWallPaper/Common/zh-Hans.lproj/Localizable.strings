@@ -1,0 +1,30 @@
+/* 
+  Localizable.strings
+  BingWallPaper
+
+  Created by wanghw on 20190329.
+  Copyright © 2019 tutuge. All rights reserved.
+*/
+"NEWEST" = "最新";
+"RANDOM" = "随机";
+"PHOTOINFO" = "图片信息";
+"LOCAL" = "国家与地区";
+"AUTOUPDATE" = "自动更新";
+"LAUNCH" = "开机启动";
+"AUTOUPDATE.TIP" = "设置自动更新Bing的每日墙纸";
+"LAUNCH.TIP" = "设置为开机启动";
+"HISTORY" = "历史图片";
+"ABOUT" = "关于";
+"QUIT" = "退出";
+"MESSATE.TITLE" = "设置更新!";
+"MESSATE.SUBTITLE.LAUNCH" = "开机启动 : ";
+"MESSATE.SUBTITLE.AUTOUPDATE" = "自动更新 : ";
+"MESSATE.ON" = "开启";
+"MESSATE.OFF" = "关闭";
+"UPDATE" = "壁纸更新!";
+"LOCAL.CN" = "中国";
+"LOCAL.USA" = "美国";
+"LOCAL.UK" = "英国";
+"LOCAL.JP" = "日本";
+"LOCAL.DE" = "德国";
+"LOCAL.AU" = "澳大利亚";

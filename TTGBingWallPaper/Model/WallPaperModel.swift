@@ -13,7 +13,7 @@ import SwiftyJSON
 struct WallPaper {
     // Constant: UserDefault key
     fileprivate static let WallPaperModelUserDefaultKey = "WallPaperModelUserDefaultKey"
-
+    
     // Original json object
     fileprivate let originalJson: JSON
     
@@ -31,7 +31,7 @@ struct WallPaper {
         endDate = json["enddate"].stringValue
         copyRight = json["copyright"].stringValue
         copyRightUrl = json["copyrightlink"].stringValue
-
+        
         // Check and set imageUrl
         let url = json["url"].stringValue
         imageUrl = url.contains("http://") ? url : WallPaperAPIManager.BingHost + url
